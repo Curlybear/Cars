@@ -1,4 +1,5 @@
 /target/
 /.project
-/Modeles.csv
-/Options.csv
+*.csv
+*.dat
+*.car
