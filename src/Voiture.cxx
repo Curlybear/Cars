@@ -179,7 +179,7 @@ void Voiture::Load(const char* pFichNom){
 
 	this->modele.Load(fichier);
 
-	fichier.read((char*)temp,sizeof(int));
+	fichier.read((char*)&temp,sizeof(int));
 	for(int i=0;i<temp;i++){
 		if(options[i]){
 			delete options[i];
