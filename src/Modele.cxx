@@ -94,6 +94,15 @@ float Modele::getPrixDeBase() const{
 	return prixDeBase;
 }
 
+Modele& Modele::operator=(const Modele& pMod){
+	this->setNom(pMod.nom);
+	this->setPuissance(pMod.getPuissance());
+	this->setDiesel(pMod.isDiesel());
+	this->setPrixDeBase(pMod.getPrixDeBase());
+
+	return *this;
+}
+
 void Modele::Save(ofstream& flux) const{
 	int size;
 	bool tempBool;

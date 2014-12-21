@@ -41,6 +41,8 @@ public:
 	bool isDiesel() const;
 	float getPrixDeBase() const;
 
+	Modele& operator=(const Modele&);
+
 	void Save(ofstream& flux) const;
 	void Load(ifstream& flux);
 
