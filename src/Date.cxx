@@ -44,6 +44,13 @@ void Date::setAnnee(int annee) {
     this->annee = annee;
 }
 
+void Date::Affiche(){
+    cout << "Date" << endl;
+    cout << "\tJour: " << jour << endl;
+    cout << "\tMois: " << mois << endl;
+    cout << "\tAnnee: " << annee << endl;
+}
+
 Date& Date::operator=(const Date& pDate) {
     this->jour = pDate.jour;
     this->mois = pDate.mois;

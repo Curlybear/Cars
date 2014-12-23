@@ -23,6 +23,8 @@
 #include "src/Voiture.h"
 #include "src/Modele.h"
 #include "src/Client.h"
+#include "src/Contrat.h"
+#include "src/Date.h"
 
 using namespace std;
 
@@ -42,19 +44,27 @@ void listUser();
 void newClient();
 void delClient();
 
+void newVoiture();
+void loadVoiture();
+
 void loadOptions();
 void loadModeles();
+
+void afficherModeles();
+void afficherOptions();
 
 ListeTriee<Employe> listeUsers;
 ListeTriee<Client> listeClients;
 ListeTriee<Modele> listeModeles;
+ListeTriee<Contrat> listeContrat;
 Liste<Option> listeOptions;
 
 FichierManager<Employe> fichierUser("Users.dat");
 FichierManager<Client> fichierClient("Client.dat");
+FichierManager<Contrat> fichierContrat("Contrat.dat");
 
 Employe userConnected;
-Voiture currentCar;
+Voiture* currentCar=NULL;
 
 int main() {
 
@@ -63,11 +73,13 @@ int main() {
 
 	fichierUser.loadAll(listeUsers);
 	fichierClient.loadAll(listeClients);
+	fichierContrat.loadAll(listeContrat);
 	loadModeles();
 	loadOptions();
 
 	listeUsers.Affiche();
 	listeClients.Affiche();
+	listeContrat.Affiche();
 	listeOptions.Affiche();
 	listeModeles.Affiche();
 
@@ -96,22 +108,26 @@ int main() {
 			break;
 		case 21: // ---------------------------MENU PROJET---------------------------
 			// Afficher la liste des modèles
-
+			afficherModeles();
 			lastMenu = 3;
 			break;
 		case 22:
 			// Afficher la liste des options
+			afficherOptions();
 			lastMenu = 3;
 			break;
 		case 23:
 			// Nouvelle voiture
+			newVoiture();
 			lastMenu = 3;
 			break;
 		case 24:
+			loadVoiture();
 			// Charger une voiture
 			lastMenu = 3;
 			break;
 		case 25:
+			currentCar->Affiche();
 			// Afficher la voiture en cours
 			lastMenu = 3;
 			break;
@@ -195,6 +211,7 @@ int main() {
 		if (loop) {
 			choix = affichageMenu(userConnected, lastMenu);
 		}
+		cout << endl << endl;
 	}
 	if (!listeUsers.vide()) {
 		fichierUser.saveAll(listeUsers);
@@ -482,6 +499,49 @@ void newClient() {
 	listeClients.insere(Client(nom, prenom, numero, adresse));
 }
 
+void newVoiture() {
+	char choix;
+	char nom[150];
+	int nummod=0;
+
+	if(currentCar!=NULL){
+		cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et commencer un nouveau projet? (y/n) : ";
+		cin >> choix;
+		if(toupper(choix) == 'Y'){
+			currentCar->Save();
+			delete currentCar;
+			currentCar=NULL;
+		}
+		else{
+			return;
+		}
+	}
+
+	cout << "\nComment souhaitez-vous nommer ce nouveau projet ?: ";
+	cin >> nom;
+	
+	while(nummod==0){
+		cout << "\nQuel modèle voulez vous utiliser ? (0 pour la liste): ";
+		cin >> nummod;
+		if(nummod == 0){
+			afficherModeles();
+		}
+	}
+
+	Iterateur<Modele> it(listeModeles);
+	int i=0;
+	while(i+1<nummod){
+		i++;
+		it++;
+	}
+
+	currentCar = new Voiture(nom,(&it));
+}
+
+void loadVoiture(){
+
+}
+
 void delClient() {
 	int numero;
 
@@ -592,4 +652,28 @@ void loadModeles() {
 		// throw some I/O exception i guess
 	}
 	flux.close();
+}
+
+void afficherModeles(){
+	Iterateur<Modele> it(listeModeles);
+	int i=1;
+	cout << "\n\nLISTE MODELES" << endl;
+	while(!it.end()){
+		cout << i << '\t' << (&it).getNom() << " " << (&it).getPuissance() << " " << (&it).isDiesel() << " " << (&it).getPrixDeBase() << endl;
+
+		i++;
+		it++;
+	}
+}
+
+void afficherOptions(){
+	Iterateur<Option> it(listeOptions);
+	int i=1;
+	cout << "\n\nLISTE OPTIONS" << endl;
+	while(!it.end()){
+		cout << i << '\t' << (&it).getCode() << " " << (&it).getIntitule() << " " << (&it).getPrix() << endl;
+
+		i++;
+		it++;
+	}
 }

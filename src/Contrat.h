@@ -33,6 +33,8 @@ public:
     float getRistourne() const;
     void setRistourne(float);
 
+    void Affiche();
+
     bool operator==(const Contrat&) const;
     bool operator!=(const Contrat&) const;
     bool operator>(const Contrat&) const;

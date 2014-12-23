@@ -9,7 +9,6 @@
 #include <fstream>
 #include <string.h>
 #include "Modele.h"
-#include "StreamUtils.h"
 
 using namespace std;
 

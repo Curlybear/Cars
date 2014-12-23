@@ -54,6 +54,16 @@ void Contrat::setRistourne(float ristourne) {
     this->ristourne = ristourne;
 }
 
+void Contrat::Affiche(){
+    cout << "Option" << endl;
+    cout << "\tId contrat: " << id << endl;
+    cout << "\tId vendeur: " << idVendeur << endl;
+    cout << "\tId client: " << idClient << endl;
+    date.Affiche();
+    voiture->Affiche();
+    cout << "\tRistourne: " << ristourne << endl;
+}
+
 bool Contrat::operator==(const Contrat& pContrat) const {
     return this->date == pContrat.date;
 }

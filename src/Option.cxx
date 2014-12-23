@@ -23,7 +23,6 @@ Option::Option() {
 Option::Option(const Option& pOption){
 	intitule = NULL;
 	setCode(pOption.getCode());
-	//setIntitule(pOption.intitule);
 	setIntitule(pOption.getIntitule());
 	setPrix(pOption.getPrix());
 }

@@ -27,6 +27,8 @@ public:
     void setMois(int);
     void setAnnee(int);
 
+    void Affiche();
+
     Date& operator=(const Date&);
 
     bool operator==(const Date&) const;
