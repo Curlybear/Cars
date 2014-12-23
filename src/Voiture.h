@@ -48,6 +48,8 @@ public:
 	const float getPrix() const;
 	const Option* getOption(int i) const;
 
+	bool checkOption(const Option&) const;
+
 	void Save() const;
 	void Load(const char*);
 

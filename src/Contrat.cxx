@@ -9,6 +9,15 @@ Contrat::Contrat() {
 Contrat::Contrat(int id, int idVendeur, int idClient, const Date& date, Voiture* voiture, float ristourne)
     : id(id), idVendeur(idVendeur), idClient(idClient), date(date), voiture(new Voiture(*voiture)), ristourne(ristourne) {}
 
+Contrat::Contrat(const Contrat& pCont){
+    id=pCont.id;
+    idVendeur=pCont.idVendeur;
+    idClient=pCont.idClient;
+    setVoiture(pCont.getVoiture());
+    date = pCont.date;
+    ristourne=pCont.ristourne;
+}
+
 Contrat::~Contrat() {
     if(this->voiture) {
         delete this->voiture;
@@ -134,7 +143,7 @@ istream& operator>> (istream& flux, Contrat& pContrat){
     flux.read(buff,size);
     pContrat.setVoiture(new Voiture());
 
-    pContrat.voiture->Load(buff);
+    pContrat.voiture->Load((string(buff)+".car").c_str());
 
     flux.read(buff,sizeof(float));
     pContrat.ristourne=atof(buff);

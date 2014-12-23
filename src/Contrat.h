@@ -21,6 +21,7 @@ private:
 public:
     Contrat();
     Contrat(int, int, int, const Date&, Voiture*, float = 0);
+    Contrat(const Contrat&);
     ~Contrat();
 
     int getId() const;

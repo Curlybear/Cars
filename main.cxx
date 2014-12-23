@@ -50,6 +50,9 @@ void loadVoiture();
 void loadOptions();
 void loadModeles();
 
+void ajoutOption();
+void retraitOption();
+
 void afficherModeles();
 void afficherOptions();
 
@@ -122,21 +125,25 @@ int main() {
 			lastMenu = 3;
 			break;
 		case 24:
-			loadVoiture();
 			// Charger une voiture
+			loadVoiture();
 			lastMenu = 3;
 			break;
 		case 25:
-			currentCar->Affiche();
 			// Afficher la voiture en cours
+			if(currentCar){
+				currentCar->Affiche();
+			}
 			lastMenu = 3;
 			break;
 		case 26:
 			// Ajouter une option à la voiture en cours
+			ajoutOption();
 			lastMenu = 3;
 			break;
 		case 27:
 			// Retirer une option à la voiture en cours
+			retraitOption();
 			lastMenu = 3;
 			break;
 		case 28:
@@ -145,6 +152,9 @@ int main() {
 			break;
 		case 29:
 			// Enregistrer la voiture en cours
+			currentCar->Save();
+			delete currentCar;
+			currentCar=NULL;
 			lastMenu = 3;
 			break;
 		case 31: // ---------------------------MENU VENTE---------------------------
@@ -539,7 +549,28 @@ void newVoiture() {
 }
 
 void loadVoiture(){
+	char choix;
+	char nom[150];
+	int numOpt=0;
 
+	if(currentCar!=NULL){
+		cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et charger un projet? (y/n) : ";
+		cin >> choix;
+		if(toupper(choix) == 'Y'){
+			currentCar->Save();
+			delete currentCar;
+			currentCar=NULL;
+		}
+		else{
+			return;
+		}
+	}
+
+	cout << "\nQuel est le nom du projet ?: ";
+	cin >> nom;
+	
+	currentCar = new Voiture();
+	currentCar->Load((string(nom)+".car").c_str());
 }
 
 void delClient() {
@@ -654,6 +685,50 @@ void loadModeles() {
 	flux.close();
 }
 
+void ajoutOption(){
+	char codeOpt[4];
+	Option temp;
+
+	while(strcmp(codeOpt,"0")==0){
+		cout << "\nQuel option voulez vous ajouter ? (0 pour la liste): ";
+		cin >> codeOpt;
+		if(strcmp(codeOpt,"0")==0){
+			afficherOptions();
+		}
+	}
+
+	temp.setCode(codeOpt);
+	Iterateur<Option> it(listeOptions);
+	int i=0;
+	while(!it.end() && !((&it)==temp)){
+		it++;
+	}
+
+	*currentCar = *currentCar+(&it);
+}
+
+void retraitOption(){
+	char codeOpt[4];
+	Option temp;
+
+	while(strcmp(codeOpt,"0")==0){
+		cout << "\nQuel option voulez vous retirer ? (0 pour la liste): ";
+		cin >> codeOpt;
+		if(strcmp(codeOpt,"0")==0){
+			afficherOptions();
+		}
+	}
+
+	temp.setCode(codeOpt);
+	Iterateur<Option> it(listeOptions);
+	int i=0;
+	while(!it.end() && !((&it)==temp)){
+		it++;
+	}
+
+	*currentCar = *currentCar-(&it);
+}
+
 void afficherModeles(){
 	Iterateur<Modele> it(listeModeles);
 	int i=1;
@@ -668,12 +743,9 @@ void afficherModeles(){
 
 void afficherOptions(){
 	Iterateur<Option> it(listeOptions);
-	int i=1;
 	cout << "\n\nLISTE OPTIONS" << endl;
 	while(!it.end()){
-		cout << i << '\t' << (&it).getCode() << " " << (&it).getIntitule() << " " << (&it).getPrix() << endl;
-
-		i++;
+		cout << (&it).getCode() << " " << (&it).getIntitule() << " " << (&it).getPrix() << endl;
 		it++;
 	}
 }

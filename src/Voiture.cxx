@@ -64,6 +64,10 @@ const void Voiture::Affiche() const{
 void Voiture::AjouteOption(const Option pOpt){
 	int i;
 
+	if(checkOption(pOpt)){
+		//TODO Throw exception
+	}
+
 	for(i=0 ; i<10 && options[i]!=NULL;i++);
 
 	if(i<10 && options[i]==NULL){
@@ -73,6 +77,10 @@ void Voiture::AjouteOption(const Option pOpt){
 
 void Voiture::RetireOption(const char * pNomOption){
 	int i;
+
+	if(!checkOption(Option(pNomOption))){
+		//TODO Throw exception
+	}
 
 	for(i=0 ; i<10 ; i++){
 		if(options[i]!=NULL){
@@ -134,6 +142,15 @@ const Option* Voiture::getOption(int i) const{
 	else{
 		return NULL;
 	}
+}
+
+bool Voiture::checkOption(const Option& pOpt) const{
+	for(int i=0 ; i<10 ; i++){
+		if(*options[i]==pOpt){
+			return true;
+		}
+	}
+	return false;
 }
 
 void Voiture::Save() const{

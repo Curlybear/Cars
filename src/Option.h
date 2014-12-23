@@ -21,6 +21,7 @@ private:
 public:
 	Option();
 	Option(const Option&);
+	Option(const char pCode[]);
 	Option(const char pCode[], const char* pIntitule, const float pPrix);
 	virtual ~Option();
 
@@ -40,6 +41,7 @@ public:
 	Option& operator=(const Option&);
 	Option& operator--();
 	Option operator--(int);
+	bool operator==(const Option& pOption);
 
 };
 

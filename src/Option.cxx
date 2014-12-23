@@ -27,6 +27,13 @@ Option::Option(const Option& pOption){
 	setPrix(pOption.getPrix());
 }
 
+Option::Option(const char pCode[]){
+	intitule = NULL;
+	setCode(pCode);
+	setIntitule("defaultIntitule");
+	setPrix(0);
+}
+
 Option::Option(const char pCode[], const char* pIntitule, const float pPrix){
 	intitule = NULL;
 	setCode(pCode);
@@ -124,6 +131,10 @@ Option Option::operator--(int){
 	Option ret(*this);
 	--(*this);
 	return ret;
+}
+
+bool Option::operator==(const Option& pOption){
+	return (strcmp(this->getCode(), pOption.getCode()) == 0);
 }
 
 ostream& operator<<( ostream& flux, const Option& pOpt){
