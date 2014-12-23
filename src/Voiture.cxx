@@ -10,7 +10,6 @@
 #include <string>
 #include "Modele.h"
 #include "Voiture.h"
-#include "StreamUtils.h"
 
 using namespace std;
 

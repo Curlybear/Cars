@@ -560,6 +560,8 @@ void loadOptions() {
 	else{
 		// throw some I/O exception i guess
 	}
+
+	flux.close();
 }
 
 void loadModeles() {
@@ -589,4 +591,5 @@ void loadModeles() {
 	else{
 		// throw some I/O exception i guess
 	}
+	flux.close();
 }

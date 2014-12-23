@@ -247,30 +247,24 @@ istream& operator>> (istream& flux, Employe& pEmp){
 	int temp;
 	char buff[50];
 
-	cout << ">>1" << endl;
 	flux.read((char*) &size, sizeof(int));
 	flux.read(buff,size);
 	pEmp.setNom(buff);
-	cout << ">>2" << endl;
 	flux.read((char*) &size, sizeof(int));
 	flux.read(buff,size);
 	pEmp.setPrenom(buff);
-	cout << ">>3" << endl;
 	flux.read((char*) &size, sizeof(int));
 	flux.read(buff,size);
 	pEmp.setLogin(buff);
-	cout << ">>4" << endl;
 	flux.read((char*) &size, sizeof(int));
 	flux.read(buff,size);
 	pEmp.setMotDePasse(buff);
-	cout << ">>5" << endl;
 	flux.read((char*)&temp,sizeof(int));
 	pEmp.setNumero(temp);
-	cout << ">>6" << endl;
 	flux.read((char*) &size, sizeof(int));
 	flux.read(buff,size);
 	pEmp.setFonction(buff);
-	cout << ">>7" << endl;
+
 	return flux;
 }
 
