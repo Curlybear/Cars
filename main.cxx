@@ -57,10 +57,13 @@ void ristourneOption();
 void afficherModeles();
 void afficherOptions();
 
+void loadIndex();
+void saveIndex();
+
 ListeTriee<Employe> listeUsers;
 ListeTriee<Client> listeClients;
-ListeTriee<Modele> listeModeles;
 ListeTriee<Contrat> listeContrat;
+ListeTriee<Modele> listeModeles;
 Liste<Option> listeOptions;
 
 FichierManager<Employe> fichierUser("Users.dat");
@@ -69,6 +72,10 @@ FichierManager<Contrat> fichierContrat("Contrat.dat");
 
 Employe userConnected;
 Voiture* currentCar=NULL;
+
+int indexEmploye;
+int indexClient;
+int indexContrat;
 
 int main() {
 
@@ -80,6 +87,8 @@ int main() {
 	fichierContrat.loadAll(listeContrat);
 	loadModeles();
 	loadOptions();
+
+	loadIndex();
 
 	listeUsers.Affiche();
 	listeClients.Affiche();
@@ -243,6 +252,8 @@ int main() {
 			fichierClient.deleteFile();
 		}
 	}
+
+	saveIndex();
 	return 0;
 }
 
@@ -494,12 +505,11 @@ void newUser() {
 	cin >> nom;
 	cout << "Prenom: ";
 	cin >> prenom;
-	cout << "Numero: ";
-	cin >> numero;
 	cout << "Admin? (y/n): ";
 	cin >> mod;
 
-	listeUsers.insere(Employe(nom, prenom, numero, login,toupper(mod) == 'Y' ? Employe::ADMINISTRATIF : Employe::VENDEUR));
+	listeUsers.insere(Employe(nom, prenom, indexEmploye, login,toupper(mod) == 'Y' ? Employe::ADMINISTRATIF : Employe::VENDEUR));
+	indexEmploye++;
 }
 
 void newClient() {
@@ -513,10 +523,9 @@ void newClient() {
 	cin >> prenom;
 	cout << "Adresse: ";
 	cin >> adresse;
-	cout << "Numero: ";
-	cin >> numero;
 
-	listeClients.insere(Client(nom, prenom, numero, adresse));
+	listeClients.insere(Client(nom, prenom, indexClient, adresse));
+	indexClient++;
 }
 
 void newVoiture() {
@@ -637,6 +646,7 @@ void listUser() {
 	Employe ret = NULL;
 	while (!it.end()) {
 		(&it).Affiche();
+		it++;
 	}
 }
 
@@ -676,7 +686,6 @@ void loadModeles() {
 
 	if(flux){
 		flux.getline(buffer,100,'\n');
-		cout << "DEBUG MODELE" << buffer << endl;
 		while(flux.peek() != EOF){
 			flux.getline(nom, 100, ';');
 			flux.getline(temp, 20, ';');
@@ -709,12 +718,9 @@ void ajoutOption(){
 
 	temp.setCode(codeOpt);
 	Iterateur<Option> it(listeOptions);
-	cout << "Here ?"  << !((&it)==temp) << endl;
 	while(!it.end() && !((&it)==temp)){
 		it++;
-		cout << "Here ?mahbe ?" << endl;
 	}
-	cout << "Here ?2" << endl;
 
 	*currentCar = (*currentCar)+(&it);
 }
@@ -776,4 +782,27 @@ void afficherOptions(){
 		cout << (&it).getCode() << " " << (&it).getIntitule() << " " << (&it).getPrix() << endl;
 		it++;
 	}
+}
+
+void loadIndex(){
+	ifstream fichier("index.dat", fstream::in | fstream::binary);
+
+	if(fichier){
+		fichier.read((char*)&indexEmploye, sizeof(int));
+		fichier.read((char*)&indexClient, sizeof(int));
+		fichier.read((char*)&indexContrat, sizeof(int));
+	}
+	else{
+		indexEmploye=1;
+		indexClient=1;
+		indexContrat=1;
+	}
+}
+
+void saveIndex(){
+	ofstream fichier("index.dat", fstream::out | fstream::trunc | fstream::binary);
+
+	fichier.write((char*)&indexEmploye, sizeof(int));
+	fichier.write((char*)&indexClient, sizeof(int));
+	fichier.write((char*)&indexContrat, sizeof(int));
 }
