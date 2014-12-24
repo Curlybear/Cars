@@ -52,6 +52,7 @@ void loadModeles();
 
 void ajoutOption();
 void retraitOption();
+void ristourneOption();
 
 void afficherModeles();
 void afficherOptions();
@@ -138,23 +139,32 @@ int main() {
 			break;
 		case 26:
 			// Ajouter une option à la voiture en cours
-			ajoutOption();
+			if(currentCar){
+				ajoutOption();
+			}
 			lastMenu = 3;
 			break;
 		case 27:
 			// Retirer une option à la voiture en cours
-			retraitOption();
+			if(currentCar){
+				retraitOption();
+			}
 			lastMenu = 3;
 			break;
 		case 28:
 			// Appliquer une ristourne à une option de la voiture en cours
+			if(currentCar){
+				ristourneOption();
+			}
 			lastMenu = 3;
 			break;
 		case 29:
 			// Enregistrer la voiture en cours
-			currentCar->Save();
-			delete currentCar;
-			currentCar=NULL;
+			if(currentCar){
+				currentCar->Save();
+				delete currentCar;
+				currentCar=NULL;
+			}
 			lastMenu = 3;
 			break;
 		case 31: // ---------------------------MENU VENTE---------------------------
@@ -686,11 +696,11 @@ void loadModeles() {
 }
 
 void ajoutOption(){
-	char codeOpt[4];
+	char codeOpt[4]="0";
 	Option temp;
 
 	while(strcmp(codeOpt,"0")==0){
-		cout << "\nQuel option voulez vous ajouter ? (0 pour la liste): ";
+		cout << "\nQuelle option voulez vous ajouter ? (0 pour la liste): ";
 		cin >> codeOpt;
 		if(strcmp(codeOpt,"0")==0){
 			afficherOptions();
@@ -699,20 +709,22 @@ void ajoutOption(){
 
 	temp.setCode(codeOpt);
 	Iterateur<Option> it(listeOptions);
-	int i=0;
+	cout << "Here ?"  << !((&it)==temp) << endl;
 	while(!it.end() && !((&it)==temp)){
 		it++;
+		cout << "Here ?mahbe ?" << endl;
 	}
+	cout << "Here ?2" << endl;
 
-	*currentCar = *currentCar+(&it);
+	*currentCar = (*currentCar)+(&it);
 }
 
 void retraitOption(){
-	char codeOpt[4];
+	char codeOpt[4]="0";
 	Option temp;
 
 	while(strcmp(codeOpt,"0")==0){
-		cout << "\nQuel option voulez vous retirer ? (0 pour la liste): ";
+		cout << "\nQuelle option voulez vous retirer ? (0 pour la liste): ";
 		cin >> codeOpt;
 		if(strcmp(codeOpt,"0")==0){
 			afficherOptions();
@@ -726,7 +738,23 @@ void retraitOption(){
 		it++;
 	}
 
-	*currentCar = *currentCar-(&it);
+	*currentCar = (*currentCar)-(&it);
+}
+
+void ristourneOption(){
+	char codeOpt[4]="0";
+	Option temp;
+
+	while(strcmp(codeOpt,"0")==0){
+		cout << "\nSur quelle option voulez vous appliquer une ristourne? (0 pour la liste): ";
+		cin >> codeOpt;
+		if(strcmp(codeOpt,"0")==0){
+			afficherOptions();
+		}
+	}
+
+	temp.setCode(codeOpt);
+	currentCar->appliquerRistourne(temp);
 }
 
 void afficherModeles(){

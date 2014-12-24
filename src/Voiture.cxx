@@ -146,7 +146,17 @@ const Option* Voiture::getOption(int i) const{
 
 bool Voiture::checkOption(const Option& pOpt) const{
 	for(int i=0 ; i<10 ; i++){
+		if(options[i]!=NULL && *(options[i])==pOpt){
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Voiture::appliquerRistourne(const Option& pOpt){
+	for(int i=0 ; i<10 ; i++){
 		if(*options[i]==pOpt){
+			(*options[i])--;
 			return true;
 		}
 	}
@@ -154,7 +164,7 @@ bool Voiture::checkOption(const Option& pOpt) const{
 }
 
 void Voiture::Save() const{
-	ofstream fichier( (string(getNom())+".car").c_str(), fstream::out | fstream::trunc | fstream::binary);
+	ofstream fichier((string(getNom())+".car").c_str(), fstream::out | fstream::trunc | fstream::binary);
 	int temp=0;
 	int size;
 

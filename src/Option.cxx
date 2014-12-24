@@ -91,7 +91,7 @@ void Option::Save(ofstream& flux) const{
 
 	flux.write(this->getCode(),5);
 
-	size = strlen(this->getIntitule());
+	size = strlen(this->getIntitule())+1;
 	flux.write((char*)&size,sizeof(int));
 	flux.write(this->getIntitule(),size);
 

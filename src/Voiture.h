@@ -49,6 +49,7 @@ public:
 	const Option* getOption(int i) const;
 
 	bool checkOption(const Option&) const;
+	bool appliquerRistourne(const Option&);
 
 	void Save() const;
 	void Load(const char*);
