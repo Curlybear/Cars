@@ -43,6 +43,7 @@ public:
 	void checkMDP(const char * pMotDePasse);
 
 	void Affiche();
+	void AfficheLigne();
 	const char * toString();
 
 	Employe& operator=(const Employe&);

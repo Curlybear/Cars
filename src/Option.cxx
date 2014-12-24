@@ -124,7 +124,14 @@ Option& Option::operator=(const Option& pOpt){
 }
 
 Option& Option::operator--(){
-	this->prix = prix - 50;
+	if(this->prix > 0){
+		if(this->prix - 50 >= 0){
+			this->prix = this->prix - 50;
+		}
+		else{
+			this->prix = 0;
+		}
+	}
 	return *this;
 }
 Option Option::operator--(int){

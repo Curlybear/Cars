@@ -39,6 +39,9 @@ void newUser();
 void changePassword();
 void resetPassword();
 void listUser();
+void listContrat();
+float listContrat(int);
+void listContratAdmin();
 
 //Vendeur-Client
 void newClient();
@@ -57,8 +60,13 @@ void ristourneOption();
 void afficherModeles();
 void afficherOptions();
 
+void afficheContrat();
+
 void loadIndex();
 void saveIndex();
+
+void newContrat();
+void modifyContrat();
 
 ListeTriee<Employe> listeUsers;
 ListeTriee<Client> listeClients;
@@ -178,18 +186,22 @@ int main() {
 			break;
 		case 31: // ---------------------------MENU VENTE---------------------------
 			// Nouveau contrat
+			newContrat();
 			lastMenu = 4;
 			break;
 		case 32:
 			// Afficher tous mes contrats
+			listContrat(userConnected.getNumero());
 			lastMenu = 4;
 			break;
 		case 33:
 			// Afficher un contrat et le prix de vente définitif
+			afficheContrat();
 			lastMenu = 4;
 			break;
 		case 34:
 			// Modifier un contrat
+			modifyContrat();
 			lastMenu = 4;
 			break;
 		case 41: // ---------------------------MENU ADMIN USER--------------------------- OK
@@ -214,14 +226,17 @@ int main() {
 			break;
 		case 51: //---------------------------MENU ADMIN CONTRAT---------------------------
 			// Afficher tous les contrats
+			listContrat();
 			lastMenu = -1;
 			break;
 		case 52:
 			// Afficher contrat spécifié
+			afficheContrat();
 			lastMenu = -1;
 			break;
 		case 53:
 			// Afficher les contrats et le chiffre d'affaire d'un vendeur
+			listContratAdmin();
 			lastMenu = -1;
 			break;
 		case 98: // CHANGEMENT DE MDP DE userConnected - OK
@@ -474,13 +489,7 @@ void infoUser() {
 		return;
 	}
 
-
-//	if(user == NULL){
-//		cout << "Utilisateur inconnu." << endl;    // TODO BREAKAGE INCOMMING
-//	}
-//	else{
 	user.Affiche();
-//	}
 }
 
 void clrscreen() {
@@ -643,11 +652,43 @@ void resetPassword() {
 
 void listUser() {
 	Iterateur<Employe> it(listeUsers);
-	Employe ret = NULL;
+	cout << "Numero" << "\t" << "Nom" << "\t" << "Prenom" << "\t" << "Login" << " " << "Motdepasse" << " " << "Fonction" << endl;
 	while (!it.end()) {
-		(&it).Affiche();
+		(&it).AfficheLigne();
 		it++;
 	}
+}
+
+void listContrat(){
+	Iterateur<Contrat> it(listeContrat);
+	cout << "Nr Cont" << "\t" << "Nr Vend" << "\t" << "Nr Clo" << "\t" << "Date     " << "\t" << "Nom du projet concerné" << "\t" << "Ristourne" << endl;
+	while (!it.end()) {
+		(&it).AfficheLigne();
+		it++;
+	}	
+}
+
+float listContrat(int pNum){
+	Iterateur<Contrat> it(listeContrat);
+	float montant=0;
+
+	while (!it.end()) {
+		if((&it).getIdVendeur()==pNum){
+			montant = montant+(&it).getVoiture()->getPrix()-(&it).getRistourne();
+			(&it).AfficheLigne();
+		}
+		it++;
+	}
+	return montant;
+}
+
+void listContratAdmin(){
+	int numVend=0;
+	float total=0;
+	cout << "\nQuel est le numero du vendeur? : ";
+	cin >> numVend;
+	total = listContrat(numVend);
+	cout << "Le montant total des ventes du vendeur n°" << numVend << " s'élève à " << total << endl;
 }
 
 void loadOptions() {
@@ -669,7 +710,7 @@ void loadOptions() {
 		}
 	}
 	else{
-		// throw some I/O exception i guess
+		// TODO throw some I/O exception i guess
 	}
 
 	flux.close();
@@ -784,6 +825,28 @@ void afficherOptions(){
 	}
 }
 
+void afficheContrat(){
+	int numCont=0;
+	float montant = 0;
+
+	cout << "\nQuel est le numero du contrat à afficher? : ";
+	cin >> numCont;
+	
+	Iterateur<Contrat> it(listeContrat);
+	while(!it.end() && (&it).getId()!=numCont){
+		it++;
+	}
+
+	if((&it).getId()!=numCont){
+		(&it).Affiche();
+		montant = (&it).getVoiture()->getPrix()-(&it).getRistourne();
+		cout << "Motant total du contrat n°" << numCont << " = " << montant << "euros" << endl;
+	}
+	else{
+		cout << "Pas de contrat n°" << numCont << endl;
+	}
+}
+
 void loadIndex(){
 	ifstream fichier("index.dat", fstream::in | fstream::binary);
 
@@ -805,4 +868,64 @@ void saveIndex(){
 	fichier.write((char*)&indexEmploye, sizeof(int));
 	fichier.write((char*)&indexClient, sizeof(int));
 	fichier.write((char*)&indexContrat, sizeof(int));
+}
+
+void newContrat(){
+	char nom[100];
+	int numero;
+	Voiture * temp;
+
+	cout << "Nouveau contrat" << endl << "---------------------" << endl;
+	cout << "Numero du client: ";
+	cin >> numero;
+	cout << "Nom du projet: ";
+	cin >> nom;
+
+	temp = new Voiture();
+	temp->Load((string(nom)+".car").c_str());
+
+	listeContrat.insere(Contrat(indexContrat, userConnected.getNumero(), numero, Date(), temp, 0));
+	indexContrat++;
+}
+
+void modifyContrat(){
+	int numCont=0;
+	float montant = 0;
+	char choix;
+	Voiture *temp;
+	char nom[100];
+	int ristourne=0;
+
+	cout << "\nQuel est le numero du contrat à modifier? : ";
+	cin >> numCont;
+	
+	Iterateur<Contrat> it(listeContrat);
+	while(!it.end() && (&it).getId()!=numCont){
+		it++;
+	}
+
+	if((&it).getId()!=numCont){
+		(&it).Affiche();
+		cout << "Souhaitez-vous modifier le projet associé à ce contrat? (y/n) : ";
+		cin >> choix;
+		if (toupper(choix) == 'Y')
+		{
+			cout << "Quel est le nom du projet à associer au contrat ? : ";
+			cin >> nom;
+			temp = new Voiture();
+			temp->Load((string(nom)+".car").c_str());
+			(&it).setVoiture(temp);
+		}
+		cout << "Souhaitez-vous modifier la ristourne accordée sur ce contrat? (y/n) : ";
+		cin >> choix;
+		if (toupper(choix) == 'Y')
+		{
+			cout << "Quel est le nouveau montant de la ristourne ? : ";
+			cin >> ristourne;
+			(&it).setRistourne(ristourne);
+		}
+	}
+	else{
+		cout << "Pas de contrat n°" << numCont << endl;
+	}
 }

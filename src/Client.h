@@ -28,6 +28,7 @@ public:
 	void setNumero(const int pNumero);
 
 	void Affiche();
+	void AfficheLigne();
 	const char * toString();
 
 	Client& operator=(const Client&);

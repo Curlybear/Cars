@@ -79,10 +79,14 @@ void Client::setNumero(const int pNumero){
 
 void Client::Affiche(){
 	cout << "CLIENT" << endl;
-	cout << "Nom: " << getNom() << endl;
-	cout << "Prenom: " << getPrenom() << endl;
-	cout << "Adresse: " << getAdresse() << endl;
-	cout << "Numero: " << getNumero() << endl;
+	cout << "\tNom: " << getNom() << endl;
+	cout << "\tPrenom: " << getPrenom() << endl;
+	cout << "\tAdresse: " << getAdresse() << endl;
+	cout << "\tNumero: " << getNumero() << endl;
+}
+
+void Client::AfficheLigne(){
+	cout << numero << "\t" << nom << " " << prenom << " " << adresse << endl;
 }
 
 const char * Client::toString(){

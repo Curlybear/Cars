@@ -183,12 +183,16 @@ void Employe::checkMDP(const char * pMotDePasse){
 
 void Employe::Affiche(){
 	cout << "EMPLOYE" << endl;
-	cout << "Nom: " << getNom() << endl;
-	cout << "Prenom: " << getPrenom() << endl;
-	cout << "Login: " << getLogin() << endl;
-	cout << "MdP: " << getMotDePasse() << endl;
-	cout << "Fonction: " << getFonction() << endl;
-	cout << "Numero: " << getNumero() << endl;
+	cout << "\tNom: " << getNom() << endl;
+	cout << "\tPrenom: " << getPrenom() << endl;
+	cout << "\tLogin: " << getLogin() << endl;
+	cout << "\tMdP: " << getMotDePasse() << endl;
+	cout << "\tFonction: " << getFonction() << endl;
+	cout << "\tNumero: " << getNumero() << endl;
+}
+
+void Employe::AfficheLigne(){
+	cout << numero << "\t" << nom << " " << prenom << "\t" << login << " " << motDePasse << " " << fonction << endl;
 }
 
 const char * Employe::toString(){

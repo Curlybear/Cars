@@ -64,13 +64,17 @@ void Contrat::setRistourne(float ristourne) {
 }
 
 void Contrat::Affiche(){
-    cout << "Option" << endl;
+    cout << "Contrat" << endl;
     cout << "\tId contrat: " << id << endl;
     cout << "\tId vendeur: " << idVendeur << endl;
     cout << "\tId client: " << idClient << endl;
     date.Affiche();
-    voiture->Affiche();
+    cout << "\tNom du projet: " << voiture->getNom() << endl;
     cout << "\tRistourne: " << ristourne << endl;
+}
+
+void Contrat::AfficheLigne(){
+    cout << id << "\t" << idVendeur << "\t" << idClient << "\t" << date.getJour() << "/" << date.getMois() << "/" << date.getAnnee() << "\t" << voiture->getNom() << "\t" << ristourne << endl;
 }
 
 bool Contrat::operator==(const Contrat& pContrat) const {

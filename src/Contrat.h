@@ -35,6 +35,7 @@ public:
     void setRistourne(float);
 
     void Affiche();
+    void AfficheLigne();
 
     bool operator==(const Contrat&) const;
     bool operator!=(const Contrat&) const;
