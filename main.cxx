@@ -527,11 +527,14 @@ void newClient() {
 
 	cout << "Nouveau client" << endl << "---------------------" << endl;
 	cout << "Nom: ";
-	cin >> nom;
+	cin.getline(nom,50,cin.widen('\n'));
+	//cin >> nom;
 	cout << "Prenom: ";
-	cin >> prenom;
+	cin.getline(prenom,50,cin.widen('\n'));
+	//cin >> prenom;
 	cout << "Adresse: ";
-	cin >> adresse;
+	cin.getline(adresse,250,cin.widen('\n'));
+	//cin >> adresse;
 
 	listeClients.insere(Client(nom, prenom, indexClient, adresse));
 	indexClient++;
@@ -556,7 +559,8 @@ void newVoiture() {
 	}
 
 	cout << "\nComment souhaitez-vous nommer ce nouveau projet ?: ";
-	cin >> nom;
+	cin.getline(nom,150,cin.widen('\n'));
+	//cin >> nom;
 	
 	while(nummod==0){
 		cout << "\nQuel modèle voulez vous utiliser ? (0 pour la liste): ";
@@ -595,7 +599,8 @@ void loadVoiture(){
 	}
 
 	cout << "\nQuel est le nom du projet ?: ";
-	cin >> nom;
+	cin.getline(nom,150,cin.widen('\n'));
+	//cin >> nom;
 	
 	currentCar = new Voiture();
 	currentCar->Load((string(nom)+".car").c_str());
@@ -615,7 +620,7 @@ void delClient() {
 }
 
 void changePassword() { // USERCONNECTED
-	char login[50], password[50];
+	char password[50];
 	Employe* tempUser = listeUsers.getElemPtr(userConnected);
 
 	try {
@@ -623,7 +628,8 @@ void changePassword() { // USERCONNECTED
 			 << "---------------------------------------------------"
 			 << endl;
 		cout << "Nouveau mot de passe: ";
-		cin >> password;
+		cin.getline(password,50,cin.widen('\n'));
+		//cin >> password;
 		tempUser->setMotDePasse(password);
 	} catch (const InvalidPasswordException& exc) {
 		cout << exc << endl;
@@ -637,7 +643,8 @@ void resetPassword() {
 	cout << "Modification du password d'un utilisateur" << endl
 		 << "---------------------------------------------------" << endl;
 	cout << "Login de l'utilisateur: ";
-	cin >> login;
+	cin.getline(login,50,cin.widen('\n'));
+	//cin >> login;
 	tempUser = listeUsers.getElemPtr(Employe(login));
 	if (tempUser != NULL) {
 		try {
@@ -879,7 +886,8 @@ void newContrat(){
 	cout << "Numero du client: ";
 	cin >> numero;
 	cout << "Nom du projet: ";
-	cin >> nom;
+	cin.getline(nom,100,cin.widen('\n'));
+	//cin >> nom;
 
 	temp = new Voiture();
 	temp->Load((string(nom)+".car").c_str());
@@ -911,7 +919,8 @@ void modifyContrat(){
 		if (toupper(choix) == 'Y')
 		{
 			cout << "Quel est le nom du projet à associer au contrat ? : ";
-			cin >> nom;
+			cin.getline(nom,100,cin.widen('\n'));
+			//cin >> nom;
 			temp = new Voiture();
 			temp->Load((string(nom)+".car").c_str());
 			(&it).setVoiture(temp);
