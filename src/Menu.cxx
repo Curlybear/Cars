@@ -7,6 +7,7 @@
 
 #include "Menu.h"
 #include <cstring>
+#include <stdlib.h>
 
 void Menu::setChoix(int choix) {
 	this->choix = choix;
@@ -29,11 +30,14 @@ void Menu::affiche(void){
 
 int Menu::choisir (void){
 	int r;
+	char temp[3];
 
 	cout << "Votre choix : ";
 	do
 	{
-		cin >> r;
+		cin.getline(temp,3,cin.widen('\n'));
+		r = atoi(temp);
+		//cin >> r;
 	}while (r>=nChoixMenu || r<0);
 	choix = r;
 	return (r);

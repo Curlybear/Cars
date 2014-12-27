@@ -110,7 +110,7 @@ int main() {
 
 	choix = affichageMenu(userConnected);
 	while (loop) {
-
+		cin.clear();
 		switch (choix) {
 		case 11: // ---------------------------MENU CLIENT---------------------------    OK
 			// Ajouter un nouveau client
@@ -266,6 +266,9 @@ int main() {
 		if(fichierClient.checkFile()){
 			fichierClient.deleteFile();
 		}
+	}
+	if (!listeContrat.vide()) {
+		fichierContrat.saveAll(listeContrat);
 	}
 
 	saveIndex();
@@ -509,13 +512,18 @@ void newUser() {
 
 	cout << "Nouvel utilisateur" << endl << "---------------------" << endl;
 	cout << "Login: ";
-	cin >> login;
+
+	cin.getline(login,50,cin.widen('\n'));
+	//cin >> login;
 	cout << "Nom: ";
-	cin >> nom;
+	cin.getline(nom,50,cin.widen('\n'));
+	//cin >> nom;
 	cout << "Prenom: ";
-	cin >> prenom;
+	cin.getline(prenom,50,cin.widen('\n'));
+	//cin >> prenom;
 	cout << "Admin? (y/n): ";
-	cin >> mod;
+	cin.getline(&mod,1,cin.widen('\n'));
+	//cin >> mod;
 
 	listeUsers.insere(Employe(nom, prenom, indexEmploye, login,toupper(mod) == 'Y' ? Employe::ADMINISTRATIF : Employe::VENDEUR));
 	indexEmploye++;
@@ -544,10 +552,12 @@ void newVoiture() {
 	char choix;
 	char nom[150];
 	int nummod=0;
+	char temp[5];
 
 	if(currentCar!=NULL){
 		cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et commencer un nouveau projet? (y/n) : ";
-		cin >> choix;
+		cin.getline(&choix,1,cin.widen('\n'));
+		//cin >> choix;
 		if(toupper(choix) == 'Y'){
 			currentCar->Save();
 			delete currentCar;
@@ -564,7 +574,9 @@ void newVoiture() {
 	
 	while(nummod==0){
 		cout << "\nQuel modèle voulez vous utiliser ? (0 pour la liste): ";
-		cin >> nummod;
+		cin.getline(temp,5,cin.widen('\n'));
+		nummod = atoi(temp);
+		//cin >> nummod;
 		if(nummod == 0){
 			afficherModeles();
 		}
@@ -587,7 +599,8 @@ void loadVoiture(){
 
 	if(currentCar!=NULL){
 		cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et charger un projet? (y/n) : ";
-		cin >> choix;
+		cin.getline(&choix,1,cin.widen('\n'));
+		//cin >> choix;
 		if(toupper(choix) == 'Y'){
 			currentCar->Save();
 			delete currentCar;
@@ -608,9 +621,12 @@ void loadVoiture(){
 
 void delClient() {
 	int numero;
+	char temp[5];
 
 	cout << "Numero du client a supprimer: ";
-	cin >> numero;
+	cin.getline(temp,5,cin.widen('\n'));
+	numero = atoi(temp);
+	//cin >> numero;
 
 	try{
 		listeClients.delElem(Client(" "," ",numero," "));
@@ -678,7 +694,8 @@ void listContrat(){
 float listContrat(int pNum){
 	Iterateur<Contrat> it(listeContrat);
 	float montant=0;
-
+	
+	cout << "Nr Cont" << "\t" << "Nr Vend" << "\t" << "Nr Clo" << "\t" << "Date     " << "\t" << "Nom du projet concerné" << "\t" << "Ristourne" << endl;
 	while (!it.end()) {
 		if((&it).getIdVendeur()==pNum){
 			montant = montant+(&it).getVoiture()->getPrix()-(&it).getRistourne();
@@ -692,8 +709,11 @@ float listContrat(int pNum){
 void listContratAdmin(){
 	int numVend=0;
 	float total=0;
+	char temp[5];
 	cout << "\nQuel est le numero du vendeur? : ";
-	cin >> numVend;
+	cin.getline(temp,5,cin.widen('\n'));
+	numVend = atoi(temp);
+	//cin >> numVend;
 	total = listContrat(numVend);
 	cout << "Le montant total des ventes du vendeur n°" << numVend << " s'élève à " << total << endl;
 }
@@ -758,7 +778,8 @@ void ajoutOption(){
 
 	while(strcmp(codeOpt,"0")==0){
 		cout << "\nQuelle option voulez vous ajouter ? (0 pour la liste): ";
-		cin >> codeOpt;
+		cin.getline(codeOpt,4,cin.widen('\n'));
+		//cin >> codeOpt;
 		if(strcmp(codeOpt,"0")==0){
 			afficherOptions();
 		}
@@ -779,7 +800,8 @@ void retraitOption(){
 
 	while(strcmp(codeOpt,"0")==0){
 		cout << "\nQuelle option voulez vous retirer ? (0 pour la liste): ";
-		cin >> codeOpt;
+		cin.getline(codeOpt,4,cin.widen('\n'));
+		//cin >> codeOpt;
 		if(strcmp(codeOpt,"0")==0){
 			afficherOptions();
 		}
@@ -801,7 +823,8 @@ void ristourneOption(){
 
 	while(strcmp(codeOpt,"0")==0){
 		cout << "\nSur quelle option voulez vous appliquer une ristourne? (0 pour la liste): ";
-		cin >> codeOpt;
+		cin.getline(codeOpt,4,cin.widen('\n'));
+		//cin >> codeOpt;
 		if(strcmp(codeOpt,"0")==0){
 			afficherOptions();
 		}
@@ -833,11 +856,14 @@ void afficherOptions(){
 }
 
 void afficheContrat(){
+	char temp[5];
 	int numCont=0;
 	float montant = 0;
 
 	cout << "\nQuel est le numero du contrat à afficher? : ";
-	cin >> numCont;
+	cin.getline(temp,5,cin.widen('\n'));
+	numCont = atoi(temp);
+	//cin >> numCont;
 	
 	Iterateur<Contrat> it(listeContrat);
 	while(!it.end() && (&it).getId()!=numCont){
@@ -879,12 +905,15 @@ void saveIndex(){
 
 void newContrat(){
 	char nom[100];
+	char tempT[5];
 	int numero;
 	Voiture * temp;
 
 	cout << "Nouveau contrat" << endl << "---------------------" << endl;
 	cout << "Numero du client: ";
-	cin >> numero;
+	cin.getline(tempT,5,cin.widen('\n'));
+	numero = atoi(tempT);
+	//cin >> numero;
 	cout << "Nom du projet: ";
 	cin.getline(nom,100,cin.widen('\n'));
 	//cin >> nom;
@@ -902,10 +931,13 @@ void modifyContrat(){
 	char choix;
 	Voiture *temp;
 	char nom[100];
-	int ristourne=0;
+	char tempT[10];
+	float ristourne=0;
 
 	cout << "\nQuel est le numero du contrat à modifier? : ";
-	cin >> numCont;
+	cin.getline(tempT,10,cin.widen('\n'));
+	numCont = atoi(tempT);
+	//cin >> numCont;
 	
 	Iterateur<Contrat> it(listeContrat);
 	while(!it.end() && (&it).getId()!=numCont){
@@ -915,7 +947,8 @@ void modifyContrat(){
 	if((&it).getId()!=numCont){
 		(&it).Affiche();
 		cout << "Souhaitez-vous modifier le projet associé à ce contrat? (y/n) : ";
-		cin >> choix;
+		cin.getline(&choix,1,cin.widen('\n'));
+		//cin >> choix;
 		if (toupper(choix) == 'Y')
 		{
 			cout << "Quel est le nom du projet à associer au contrat ? : ";
@@ -926,11 +959,14 @@ void modifyContrat(){
 			(&it).setVoiture(temp);
 		}
 		cout << "Souhaitez-vous modifier la ristourne accordée sur ce contrat? (y/n) : ";
-		cin >> choix;
+		cin.getline(&choix,1,cin.widen('\n'));
+		//cin >> choix;
 		if (toupper(choix) == 'Y')
 		{
 			cout << "Quel est le nouveau montant de la ristourne ? : ";
-			cin >> ristourne;
+			cin.getline(tempT,10,cin.widen('\n'));
+			ristourne = atof(tempT);
+			//cin >> ristourne;
 			(&it).setRistourne(ristourne);
 		}
 	}

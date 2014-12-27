@@ -43,6 +43,7 @@ public:
     bool operator<(const Contrat&) const;
     bool operator>=(const Contrat&) const;
     bool operator<=(const Contrat&) const;
+    Contrat& operator=(const Contrat&);
 
     friend ostream& operator<<(ostream&, const Contrat&);
     friend istream& operator>>(istream&, Contrat&);

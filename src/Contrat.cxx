@@ -10,6 +10,7 @@ Contrat::Contrat(int id, int idVendeur, int idClient, const Date& date, Voiture*
     : id(id), idVendeur(idVendeur), idClient(idClient), date(date), voiture(new Voiture(*voiture)), ristourne(ristourne) {}
 
 Contrat::Contrat(const Contrat& pCont){
+    this->voiture = NULL;
     id=pCont.id;
     idVendeur=pCont.idVendeur;
     idClient=pCont.idClient;
@@ -99,6 +100,17 @@ bool Contrat::operator>=(const Contrat& pContrat) const {
 
 bool Contrat::operator<=(const Contrat& pContrat) const {
     return this->date <= pContrat.date;
+}
+
+Contrat& Contrat::operator=(const Contrat& pCont){
+    id=pCont.id;
+    idVendeur=pCont.idVendeur;
+    idClient=pCont.idClient;
+    setVoiture(pCont.getVoiture());
+    date = pCont.date;
+    ristourne=pCont.ristourne;
+
+    return *this;
 }
 
 ostream& operator<<(ostream& flux, const Contrat& pContrat) {
