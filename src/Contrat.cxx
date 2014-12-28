@@ -61,7 +61,9 @@ float Contrat::getRistourne() const {
 }
 
 void Contrat::setRistourne(float ristourne) {
-    this->ristourne = ristourne;
+    if(this->voiture->getPrix()-ristourne>0){
+        this->ristourne = ristourne;
+    }
 }
 
 void Contrat::Affiche(){
