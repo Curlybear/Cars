@@ -49,11 +49,12 @@ Voiture* Contrat::getVoiture() const {
     return this->voiture;
 }
 
-void Contrat::setVoiture(Voiture* voiture) {
+void Contrat::setVoiture(Voiture* pVoiture) {
     if(this->voiture) {
         delete this->voiture;
     }
-    this->voiture = new Voiture(*voiture);
+    this->risourne= 0;
+    this->voiture = new Voiture(*pVoiture);
 }
 
 float Contrat::getRistourne() const {

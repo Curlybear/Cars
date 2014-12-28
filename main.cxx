@@ -946,7 +946,7 @@ void modifyContrat(){
 
 	if((&it).getId()!=numCont){
 		(&it).Affiche();
-		cout << "Souhaitez-vous modifier le projet associé à ce contrat? (y/n) : ";
+		cout << "Souhaitez-vous modifier le projet associé à ce contrat? Cela entrainera une remise à 0 de la ristourne (y/n) : ";
 		cin.getline(&choix,1,cin.widen('\n'));
 		//cin >> choix;
 		if (toupper(choix) == 'Y')
