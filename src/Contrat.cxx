@@ -53,7 +53,7 @@ void Contrat::setVoiture(Voiture* pVoiture) {
     if(this->voiture) {
         delete this->voiture;
     }
-    this->risourne= 0;
+    this->ristourne= 0;
     this->voiture = new Voiture(*pVoiture);
 }
 

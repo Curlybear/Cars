@@ -31,7 +31,7 @@ using namespace std;
 int affichageMenu(const Employe& usr, int menuEnCours = -1);
 Employe login();
 void clrscreen();
-void pause();
+void Pause();
 
 //Admin-User
 void infoUser();
@@ -251,7 +251,7 @@ int main() {
 			loop = false;
 			break;
 		}
-		pause();
+		Pause();
 		if (loop) {
 			choix = affichageMenu(userConnected, lastMenu);
 		}
@@ -426,7 +426,7 @@ Employe login() {
 				tempUser = new Employe(listeUsers.getElem(Employe(&username[0])));
 			}catch(const InvalidRequestException& e){
 				cout << e << endl;
-				pause();
+				Pause();
 				continue;
 			}
 			if (tempUser != NULL) {
@@ -454,7 +454,7 @@ Employe login() {
 			} else {
 				cout << "Le mot de passe et/ou l'utilisateur n'est pas correct"
 						<< endl;
-				pause();
+				Pause();
 			}
 		} else {
 			cout << "\tPassword: ";
@@ -466,7 +466,7 @@ Employe login() {
 			} else {
 				cout << "Le mot de passe et/ou l'utilisateur n'est pas correct"
 						<< endl;
-				pause();
+				Pause();
 			}
 		}
 		cout << endl;
@@ -499,7 +499,7 @@ void clrscreen() {
 	cout << string(50, '\n');
 }
 
-void pause() {
+void Pause() {
 	cout << "Press ENTER to continue...";
 	cin.get();
 	cin.ignore();
