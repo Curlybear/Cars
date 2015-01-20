@@ -546,16 +546,16 @@ void newClient() {
 }
 
 void newVoiture() {
-    char choix;
+    char choix[2];
     char nom[150];
     int nummod=0;
     char temp[5];
 
     if(currentCar!=NULL){
         cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et commencer un nouveau projet? (y/n) : ";
-        cin.getline(&choix,1,cin.widen('\n'));
+        cin.getline(choix,2,cin.widen('\n'));
         //cin >> choix;
-        if(toupper(choix) == 'Y'){
+        if(toupper(choix[0]) == 'Y'){
             currentCar->Save();
             delete currentCar;
             currentCar=NULL;
@@ -590,15 +590,15 @@ void newVoiture() {
 }
 
 void loadVoiture(){
-    char choix;
+    char choix[2];
     char nom[150];
     int numOpt=0;
 
     if(currentCar!=NULL){
         cout << "Il y a déjà un projet en cours d'édition voulez vous le sauvegarder et charger un projet? (y/n) : ";
-        cin.getline(&choix,1,cin.widen('\n'));
+        cin.getline(choix,2,cin.widen('\n'));
         //cin >> choix;
-        if(toupper(choix) == 'Y'){
+        if(toupper(choix[0]) == 'Y'){
             currentCar->Save();
             delete currentCar;
             currentCar=NULL;
@@ -924,7 +924,7 @@ void newContrat(){
 void modifyContrat(){
     int numCont=0;
     float montant = 0;
-    char choix;
+    char choix[2];
     Voiture *temp;
     char nom[100];
     char tempT[10];
@@ -943,9 +943,9 @@ void modifyContrat(){
     if((&it).getId()==numCont){
         (&it).Affiche();
         cout << "Souhaitez-vous modifier le projet associé à ce contrat? Cela entrainera une remise à 0 de la ristourne (y/n) : ";
-        cin.getline(&choix,1,cin.widen('\n'));
+        cin.getline(choix,2,cin.widen('\n'));
         //cin >> choix;
-        if (toupper(choix) == 'Y')
+        if (toupper(choix[0]) == 'Y')
         {
             cout << "Quel est le nom du projet à associer au contrat ? : ";
             cin.getline(nom,100,cin.widen('\n'));
@@ -955,9 +955,9 @@ void modifyContrat(){
             (&it).setVoiture(temp);
         }
         cout << "Souhaitez-vous modifier la ristourne accordée sur ce contrat? (y/n) : ";
-        cin.getline(&choix,1,cin.widen('\n'));
+        cin.getline(choix,2,cin.widen('\n'));
         //cin >> choix;
-        if (toupper(choix) == 'Y')
+        if (toupper(choix[0]) == 'Y')
         {
             cout << "Quel est le nouveau montant de la ristourne ? : ";
             cin.getline(tempT,10,cin.widen('\n'));
