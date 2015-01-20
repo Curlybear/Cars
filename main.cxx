@@ -11,7 +11,6 @@
 #include <ctime>
 #include <cstring>
 #include "src/Employe.h"
-#include "src/FichierUser.h"
 #include "src/FichierManager.h"
 #include "src/ListeTriee.h"
 #include "src/Liste.h"
