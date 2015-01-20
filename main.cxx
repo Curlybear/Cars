@@ -868,7 +868,7 @@ void afficheContrat(){
 		it++;
 	}
 
-	if((&it).getId()!=numCont){
+	if((&it).getId()==numCont){
 		(&it).Affiche();
 		montant = (&it).getVoiture()->getPrix()-(&it).getRistourne();
 		cout << "Motant total du contrat n°" << numCont << " = " << montant << "euros" << endl;
@@ -905,7 +905,7 @@ void newContrat(){
 	char nom[100];
 	char tempT[5];
 	int numero;
-	Voiture * temp;
+	Voiture temp;
 
 	cout << "Nouveau contrat" << endl << "---------------------" << endl;
 	cout << "Numero du client: ";
@@ -916,11 +916,9 @@ void newContrat(){
 	cout << "Nom du projet: ";
 	cin.getline(nom,100,cin.widen('\n'));
 	//cin >> nom;
+	temp.Load((string(nom)+".car").c_str());
 
-	temp = new Voiture();
-	temp->Load((string(nom)+".car").c_str());
-
-	listeContrat.insere(Contrat(indexContrat, userConnected.getNumero(), numero, Date(), temp, 0));
+	listeContrat.insere(Contrat(indexContrat, userConnected.getNumero(), numero, Date(), &temp, 0));
 	indexContrat++;
 }
 
@@ -943,7 +941,7 @@ void modifyContrat(){
 		it++;
 	}
 
-	if((&it).getId()!=numCont){
+	if((&it).getId()==numCont){
 		(&it).Affiche();
 		cout << "Souhaitez-vous modifier le projet associé à ce contrat? Cela entrainera une remise à 0 de la ristourne (y/n) : ";
 		cin.getline(&choix,1,cin.widen('\n'));
