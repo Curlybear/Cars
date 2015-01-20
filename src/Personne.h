@@ -12,29 +12,29 @@
 using namespace std;
 
 class Personne {
-	friend ostream& operator<< (ostream& , const Personne&);
-	friend istream& operator>> (istream& , Personne&);
+    friend ostream& operator<< (ostream& , const Personne&);
+    friend istream& operator>> (istream& , Personne&);
 protected:
-	char * nom;
-	char * prenom;
+    char * nom;
+    char * prenom;
 public:
-	Personne();
-	Personne(const char * pNom, const char * pPrenom);
-	Personne(const Personne&);
-	virtual ~Personne();
+    Personne();
+    Personne(const char * pNom, const char * pPrenom);
+    Personne(const Personne&);
+    virtual ~Personne();
 
-	const char* getNom() const;
-	const char* getPrenom() const;
-	void setNom(const char* pNom);
-	void setPrenom(const char* pPrenom);
+    const char* getNom() const;
+    const char* getPrenom() const;
+    void setNom(const char* pNom);
+    void setPrenom(const char* pPrenom);
 
-	void Affiche();
-	virtual const char * toString();
+    void Affiche();
+    virtual const char * toString();
 
-	Personne& operator=(const Personne&);
-	int comparaison(const char*, const char*);
-	int operator<(const Personne&);
-	int operator>(const Personne&);
+    Personne& operator=(const Personne&);
+    int comparaison(const char*, const char*);
+    int operator<(const Personne&);
+    int operator>(const Personne&);
 };
 
 #endif /* PERSONNE_H_ */

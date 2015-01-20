@@ -19,30 +19,30 @@ private:
 
 public:
 
-	Liste();
-	~Liste(){
+    Liste();
+    ~Liste(){
 
-	}
+    }
 
-	void insere(const T&);
+    void insere(const T&);
 };
 
 template<class T> Liste<T>::Liste() : ListeBase<T>(){
 }
 
 template<class T> void Liste<T>::insere(const T& elem){
-	noeud<T>* parc = this->debut;
-	if(parc == NULL){
-		this->debut = new noeud<T>;
-		this->debut->elem = T(elem);
-	}
-	else{
-		while(parc->suivant != NULL){
-			parc = parc-> suivant;
-		}
-		parc->suivant = new noeud<T>;
-		parc->suivant->elem = T(elem);
-	}
+    noeud<T>* parc = this->debut;
+    if(parc == NULL){
+        this->debut = new noeud<T>;
+        this->debut->elem = T(elem);
+    }
+    else{
+        while(parc->suivant != NULL){
+            parc = parc-> suivant;
+        }
+        parc->suivant = new noeud<T>;
+        parc->suivant->elem = T(elem);
+    }
 }
 
 #endif /* LISTE_H_ */

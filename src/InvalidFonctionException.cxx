@@ -12,7 +12,6 @@ using namespace std;
 
 ostream& operator<< (ostream& s, const InvalidFonctionException& m)
 {
-	s << m.message;
-	return s;
+    s << m.message;
+    return s;
 }
-

@@ -12,6 +12,6 @@ using namespace std;
 
 ostream& operator<< (ostream& s, const InvalidRequestException& m)
 {
-	s << m.message;
-	return s;
+    s << m.message;
+    return s;
 }

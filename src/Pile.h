@@ -18,13 +18,13 @@ private:
 
 public:
 
-	Pile();
-	virtual ~Pile(){
+    Pile();
+    virtual ~Pile(){
 
-	}
+    }
 
-	void insere(const T&);
-	T retire();
+    void insere(const T&);
+    T retire();
 };
 
 template<class T> Pile<T>::Pile(){
@@ -32,21 +32,21 @@ template<class T> Pile<T>::Pile(){
 }
 
 template<class T> void Pile<T>::insere(const T& elem){
-	noeud<T>* parc = this->debut;
+    noeud<T>* parc = this->debut;
 
-	this->debut = new noeud<T>;
-	this->debut->elem = T(elem);
-	this->debut->suivant = parc;
+    this->debut = new noeud<T>;
+    this->debut->elem = T(elem);
+    this->debut->suivant = parc;
 }
 
 template<class T> T Pile<T>::retire(){
-	T elemret = this->debut->elem;
-	noeud<T>* parc = this->debut;
+    T elemret = this->debut->elem;
+    noeud<T>* parc = this->debut;
 
-	this->debut = this->debut->suivant;
-	delete parc;
+    this->debut = this->debut->suivant;
+    delete parc;
 
-	return elemret;
+    return elemret;
 }
 
 #endif /* PILE_H_ */

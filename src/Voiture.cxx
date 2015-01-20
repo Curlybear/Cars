@@ -14,289 +14,289 @@
 using namespace std;
 
 Voiture::Voiture(){
-	nom = NULL;
-	setNom("defaultVoiture");
-	setModele(Modele());
-	for(int i=0;i<10;i++){options[i]=NULL;}
+    nom = NULL;
+    setNom("defaultVoiture");
+    setModele(Modele());
+    for(int i=0;i<10;i++){options[i]=NULL;}
 }
 Voiture::Voiture(const Voiture& pVoiture){
-	nom = NULL;
-	setNom(pVoiture.getNom());
-	setModele(pVoiture.getModele());
-	for(int i=0;i<10;i++){
-		if(pVoiture.getOption(i)!=NULL){
-			options[i] = new Option(*pVoiture.getOption(i));
-		}
-		else{
-			options[i]=NULL;
-		}
-	}
+    nom = NULL;
+    setNom(pVoiture.getNom());
+    setModele(pVoiture.getModele());
+    for(int i=0;i<10;i++){
+        if(pVoiture.getOption(i)!=NULL){
+            options[i] = new Option(*pVoiture.getOption(i));
+        }
+        else{
+            options[i]=NULL;
+        }
+    }
 }
 Voiture::Voiture(const char* pNom, const Modele pModele){
-	nom = NULL;
-	setNom(pNom);
-	setModele(pModele);
-	for(int i=0;i<10;i++){options[i]=NULL;}
+    nom = NULL;
+    setNom(pNom);
+    setModele(pModele);
+    for(int i=0;i<10;i++){options[i]=NULL;}
 }
 Voiture::~Voiture(){
-	if(this->nom){
-		delete[] this->nom;
-	}
+    if(this->nom){
+        delete[] this->nom;
+    }
 
-	for(int i=0;i<10;i++){
-		if(options[i]!=NULL){
-			delete options[i];
-		}
-	}
+    for(int i=0;i<10;i++){
+        if(options[i]!=NULL){
+            delete options[i];
+        }
+    }
 }
 
 const void Voiture::Affiche() const{
-	cout << "Voiture" << endl;
-	cout << "\tNom:" << getNom() << endl;
-	getModele().Affiche();
-	for(int i=0; i<10 ; i++){
-		if(options[i]!=NULL){
-			options[i]->Affiche();
-		}
-	}
+    cout << "Voiture" << endl;
+    cout << "\tNom:" << getNom() << endl;
+    getModele().Affiche();
+    for(int i=0; i<10 ; i++){
+        if(options[i]!=NULL){
+            options[i]->Affiche();
+        }
+    }
 }
 
 void Voiture::AjouteOption(const Option pOpt){
-	int i;
+    int i;
 
-	if(checkOption(pOpt)){
-		//TODO Throw exception
-	}
+    if(checkOption(pOpt)){
+        //TODO Throw exception
+    }
 
-	for(i=0 ; i<10 && options[i]!=NULL;i++);
+    for(i=0 ; i<10 && options[i]!=NULL;i++);
 
-	if(i<10 && options[i]==NULL){
-		options[i] = new Option(pOpt);
-	}
+    if(i<10 && options[i]==NULL){
+        options[i] = new Option(pOpt);
+    }
 }
 
 void Voiture::RetireOption(const char * pNomOption){
-	int i;
+    int i;
 
-	if(!checkOption(Option(pNomOption))){
-		//TODO Throw exception
-	}
+    if(!checkOption(Option(pNomOption))){
+        //TODO Throw exception
+    }
 
-	for(i=0 ; i<10 ; i++){
-		if(options[i]!=NULL){
-			if(strcmp(options[i]->getCode(), pNomOption)==0){
-				delete options[i];
-				options[i] = NULL;
-				i=10;
-			}
-		}
-	}
+    for(i=0 ; i<10 ; i++){
+        if(options[i]!=NULL){
+            if(strcmp(options[i]->getCode(), pNomOption)==0){
+                delete options[i];
+                options[i] = NULL;
+                i=10;
+            }
+        }
+    }
 }
 
 void Voiture::setNom(const char* pNom){
-	if(nom)
-	{
-		delete nom;
-	}
+    if(nom)
+    {
+        delete nom;
+    }
 
-	if(pNom)
-	{
-		this->nom=new char[strlen(pNom)+1];
-		strcpy(nom,pNom);
-	}
-	else
-		this->nom=NULL;
+    if(pNom)
+    {
+        this->nom=new char[strlen(pNom)+1];
+        strcpy(nom,pNom);
+    }
+    else
+        this->nom=NULL;
 }
 void Voiture::setModele(const Modele pModele){
-	modele.setNom(pModele.getNom());
-	modele.setPuissance(pModele.getPuissance());
-	modele.setDiesel(pModele.isDiesel());
-	modele.setPrixDeBase(pModele.getPrixDeBase());
+    modele.setNom(pModele.getNom());
+    modele.setPuissance(pModele.getPuissance());
+    modele.setDiesel(pModele.isDiesel());
+    modele.setPrixDeBase(pModele.getPrixDeBase());
 }
 
 const char * Voiture::getNom() const{
-	return nom;
+    return nom;
 }
 const Modele Voiture::getModele() const{
-	return modele;
+    return modele;
 }
 
 const float Voiture::getPrix() const{
-	float prixTotal;
+    float prixTotal;
 
-	prixTotal = modele.getPrixDeBase();
+    prixTotal = modele.getPrixDeBase();
 
-	for(int i=0 ; i<10 ; i++){
-		if(options[i]!=NULL){
-			prixTotal +=options[i]->getPrix();
-		}
-	}
+    for(int i=0 ; i<10 ; i++){
+        if(options[i]!=NULL){
+            prixTotal +=options[i]->getPrix();
+        }
+    }
 
-	return prixTotal;
+    return prixTotal;
 }
 
 const Option* Voiture::getOption(int i) const{
-	if(options[i]!=NULL){
-		return options[i];
-	}
-	else{
-		return NULL;
-	}
+    if(options[i]!=NULL){
+        return options[i];
+    }
+    else{
+        return NULL;
+    }
 }
 
 bool Voiture::checkOption(const Option& pOpt) const{
-	for(int i=0 ; i<10 ; i++){
-		if(options[i]!=NULL && *(options[i])==pOpt){
-			return true;
-		}
-	}
-	return false;
+    for(int i=0 ; i<10 ; i++){
+        if(options[i]!=NULL && *(options[i])==pOpt){
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Voiture::appliquerRistourne(const Option& pOpt){
-	for(int i=0 ; i<10 ; i++){
-		if(*options[i]==pOpt){
-			(*options[i])--;
-			return true;
-		}
-	}
-	return false;
+    for(int i=0 ; i<10 ; i++){
+        if(*options[i]==pOpt){
+            (*options[i])--;
+            return true;
+        }
+    }
+    return false;
 }
 
 void Voiture::Save() const{
-	ofstream fichier((string(getNom())+".car").c_str(), fstream::out | fstream::trunc | fstream::binary);
-	int temp=0;
-	int size;
+    ofstream fichier((string(getNom())+".car").c_str(), fstream::out | fstream::trunc | fstream::binary);
+    int temp=0;
+    int size;
 
-	size = strlen(this->getNom());
-	fichier.write((char*)&size,sizeof(int));
-	fichier.write(this->getNom(), size);
+    size = strlen(this->getNom());
+    fichier.write((char*)&size,sizeof(int));
+    fichier.write(this->getNom(), size);
 
-	this->modele.Save(fichier);
+    this->modele.Save(fichier);
 
-	for(int i=0;i<10;i++){
-		if(this->getOption(i)!=NULL){
-			temp++;
-		}
-	}
+    for(int i=0;i<10;i++){
+        if(this->getOption(i)!=NULL){
+            temp++;
+        }
+    }
 
-	fichier.write((char *)&temp,sizeof(int));
+    fichier.write((char *)&temp,sizeof(int));
 
-	for(int i=0;i<10;i++){
-		if(this->getOption(i)!=NULL){
-			options[i]->Save(fichier);
-		}
-	}
+    for(int i=0;i<10;i++){
+        if(this->getOption(i)!=NULL){
+            options[i]->Save(fichier);
+        }
+    }
 
 
-	fichier.close();
+    fichier.close();
 }
 
 void Voiture::Load(const char* pFichNom){
-	ifstream fichier(&pFichNom[0], fstream::in | fstream::binary);
-	int temp=0;
-	int size;
-	char buff[50];
+    ifstream fichier(&pFichNom[0], fstream::in | fstream::binary);
+    int temp=0;
+    int size;
+    char buff[50];
 
 
-	fichier.read((char*) &size, sizeof(int));
-	fichier.read(buff,size);
-	this->setNom(buff);
+    fichier.read((char*) &size, sizeof(int));
+    fichier.read(buff,size);
+    this->setNom(buff);
 
-	this->modele.Load(fichier);
+    this->modele.Load(fichier);
 
-	fichier.read((char*)&temp,sizeof(int));
-	for(int i=0;i<temp;i++){
-		if(options[i]){
-			delete options[i];
-		}
-		options[i] = new Option();
-		options[i]->Load(fichier);
-	}
+    fichier.read((char*)&temp,sizeof(int));
+    for(int i=0;i<temp;i++){
+        if(options[i]){
+            delete options[i];
+        }
+        options[i] = new Option();
+        options[i]->Load(fichier);
+    }
 
-	for(int i=temp; i<10;i++){
-		if(options[i]){
-			delete options[i];
-		}
-	}
+    for(int i=temp; i<10;i++){
+        if(options[i]){
+            delete options[i];
+        }
+    }
 
-	fichier.close();
+    fichier.close();
 }
 
 
 Voiture& Voiture::operator=(const Voiture& pVoiture){
-	setModele(pVoiture.getModele());
-	setNom(pVoiture.getNom());
+    setModele(pVoiture.getModele());
+    setNom(pVoiture.getNom());
 
-	for(int i=0;i<10;i++){
-		if(options[i]){
-			delete options[i];
-		}
-		if(pVoiture.getOption(i)!=NULL){
-			options[i] = new Option(*pVoiture.getOption(i));
-		}
-		else{
-			options[i]=NULL;
-		}
-	}
+    for(int i=0;i<10;i++){
+        if(options[i]){
+            delete options[i];
+        }
+        if(pVoiture.getOption(i)!=NULL){
+            options[i] = new Option(*pVoiture.getOption(i));
+        }
+        else{
+            options[i]=NULL;
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
 bool Voiture::operator<(const Voiture& pVoiture){
-	return getPrix() < pVoiture.getPrix();
+    return getPrix() < pVoiture.getPrix();
 }
 
 bool Voiture::operator>(const Voiture& pVoiture){
-	return getPrix() > pVoiture.getPrix();
+    return getPrix() > pVoiture.getPrix();
 }
 
 bool Voiture::operator==(const Voiture& pVoiture){
-	return getPrix() == pVoiture.getPrix();
+    return getPrix() == pVoiture.getPrix();
 }
 
 
 Voiture operator+(const Voiture& pVoiture, const Option& pOption){
-	Voiture temp(pVoiture);
+    Voiture temp(pVoiture);
 
-	temp.AjouteOption(pOption);
+    temp.AjouteOption(pOption);
 
-	return temp;
+    return temp;
 }
 
 Voiture operator-(const Voiture& pVoiture, const Option& pOption){
-	Voiture temp(pVoiture);
+    Voiture temp(pVoiture);
 
-	temp.RetireOption(pOption.getCode());
+    temp.RetireOption(pOption.getCode());
 
-	return temp;
+    return temp;
 }
 
 Voiture operator-(const Voiture& pVoiture, const char * pOptionCode){
-	Voiture temp(pVoiture);
+    Voiture temp(pVoiture);
 
-	temp.RetireOption(pOptionCode);
+    temp.RetireOption(pOptionCode);
 
-	return temp;
+    return temp;
 }
 
 ostream& operator<<( ostream& flux, const Voiture& pVot){
-	flux <<	pVot.nom << endl
-	<< pVot.modele;
+    flux << pVot.nom << endl
+    << pVot.modele;
 
-	return flux;
+    return flux;
 }
 
 istream& operator>> (istream& flux, Voiture& pVot){
 
-	char buffer[50];
+    char buffer[50];
 
-	flux >> buffer;
-	pVot.setNom(buffer);
-	flux >> pVot.modele;
+    flux >> buffer;
+    pVot.setNom(buffer);
+    flux >> pVot.modele;
 
-	flux.clear();
-	flux.ignore();
+    flux.clear();
+    flux.ignore();
 
-	return flux;
+    return flux;
 }
