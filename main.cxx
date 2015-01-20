@@ -185,7 +185,12 @@ int main() {
 			break;
 		case 31: // ---------------------------MENU VENTE---------------------------
 			// Nouveau contrat
-			newContrat();
+			try{
+				newContrat();
+			}catch(InvalidRequestException exc){
+				cout << exc << endl;
+			}
+			
 			lastMenu = 4;
 			break;
 		case 32:
@@ -913,6 +918,7 @@ void newContrat(){
 	cout << "Numero du client: ";
 	cin.getline(tempT,5,cin.widen('\n'));
 	numero = atoi(tempT);
+	listeClients.getElem(Client(NULL,NULL,numero,NULL));
 	//cin >> numero;
 	cout << "Nom du projet: ";
 	cin.getline(nom,100,cin.widen('\n'));
