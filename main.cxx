@@ -320,6 +320,7 @@ int affichageMenu(const Employe& user, int menuEnCours) {
 	int nbMenuAdminContrat = 4;
 	Menu menuAdminContrat(optionsAdminContrat, nbMenuAdminContrat);
 
+
 	if (user.getRole()) {
 		for (;;) {
 			clrscreen();
@@ -507,7 +508,7 @@ void Pause() {
 
 void newUser() {
 	char login[50], nom[50], prenom[50];
-	char mod;
+	char mod[2];
 	int numero;
 
 	cout << "Nouvel utilisateur" << endl << "---------------------" << endl;
@@ -522,10 +523,10 @@ void newUser() {
 	cin.getline(prenom,50,cin.widen('\n'));
 	//cin >> prenom;
 	cout << "Admin? (y/n): ";
-	cin.getline(&mod,1,cin.widen('\n'));
+	cin.getline(mod,2,cin.widen('\n'));
 	//cin >> mod;
 
-	listeUsers.insere(Employe(nom, prenom, indexEmploye, login,toupper(mod) == 'Y' ? Employe::ADMINISTRATIF : Employe::VENDEUR));
+	listeUsers.insere(Employe(nom, prenom, indexEmploye, login,toupper(mod[0]) == 'Y' ? Employe::ADMINISTRATIF : Employe::VENDEUR));
 	indexEmploye++;
 }
 
