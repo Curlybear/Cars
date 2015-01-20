@@ -211,45 +211,41 @@ int main() {
 		case 41: // ---------------------------MENU ADMIN USER--------------------------- OK
 			// Afficher liste utilisateur - OK
 			listUser();
-			lastMenu = -1;
+			lastMenu = 2;
 			break;
 		case 42:
 			// Afficher info d'un user - OK
 			infoUser();
-			lastMenu = -1;
+			lastMenu = 2;
 			break;
 		case 43:
 			// Créer user - OK
 			newUser();
-			lastMenu = -1;
+			lastMenu = 2;
 			break;
 		case 44:
 			// Reset specified user's password - OK
 			resetPassword();
-			lastMenu = -1;
+			lastMenu = 2;
 			break;
 		case 51: //---------------------------MENU ADMIN CONTRAT---------------------------
 			// Afficher tous les contrats
 			listContrat();
-			lastMenu = -1;
+			lastMenu = 3;
 			break;
 		case 52:
 			// Afficher contrat spécifié
 			afficheContrat();
-			lastMenu = -1;
+			lastMenu = 3;
 			break;
 		case 53:
 			// Afficher les contrats et le chiffre d'affaire d'un vendeur
 			listContratAdmin();
-			lastMenu = -1;
+			lastMenu = 3;
 			break;
 		case 98: // CHANGEMENT DE MDP DE userConnected - OK
 			changePassword();
-			lastMenu = -1;
-			break;
-		case 99: //Nouvelle session
-			userConnected = login();
-			lastMenu = -1;
+			lastMenu = 3;
 			break;
 		case 0:
 			loop = false;
@@ -402,9 +398,6 @@ int affichageMenu(const Employe& user, int menuEnCours) {
 				} else {
 					menuEnCours = -1;
 				}
-				break;
-			case 4:
-				return 99; // Nouvelle session
 				break;
 			case 0:
 				return 0;
