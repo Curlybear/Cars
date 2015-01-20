@@ -119,6 +119,7 @@ Contrat& Contrat::operator=(const Contrat& pCont){
 ostream& operator<<(ostream& flux, const Contrat& pContrat) {
 
     int size;
+    float tempRist;
 
     size = pContrat.getId(); // ID
     flux.write((char *)&size,sizeof(int));
@@ -135,8 +136,8 @@ ostream& operator<<(ostream& flux, const Contrat& pContrat) {
     flux.write((char*)&size,sizeof(int));
     flux.write(pContrat.getVoiture()->getNom(),size);
 
-    size = pContrat.getRistourne(); // RISTOURNE
-    flux.write((char *)&size,sizeof(float));
+    tempRist = pContrat.getRistourne(); // RISTOURNE
+    flux.write((char *)&tempRist,sizeof(float));
 
     return flux;
 }
