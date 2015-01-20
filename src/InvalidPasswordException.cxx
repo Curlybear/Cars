@@ -15,5 +15,3 @@ ostream& operator<< (ostream& s, const InvalidPasswordException& m)
 	s << m.message;
 	return s;
 }
-
-

@@ -190,7 +190,7 @@ int main() {
 			}catch(InvalidRequestException exc){
 				cout << exc << endl;
 			}
-			
+
 			lastMenu = 4;
 			break;
 		case 32:
@@ -414,9 +414,8 @@ Employe login() {
 	while (loop) {
 		clrscreen();
 		cout << "***************************************************" << endl;
-		cout << "***************    Carhuehuehue    ****************" << endl;
-		cout << "***************************************************" << endl
-				<< endl;
+		cout << "***************   InpresCarSeller   ***************" << endl;
+		cout << "***************************************************" << endl << endl;
 		cout << "\tUsername: ";
 		cin.getline(username,50,cin.widen('\n'));
 		if (fichierUser.checkFile()) {
@@ -569,7 +568,7 @@ void newVoiture() {
 	cout << "\nComment souhaitez-vous nommer ce nouveau projet ?: ";
 	cin.getline(nom,150,cin.widen('\n'));
 	//cin >> nom;
-	
+
 	while(nummod==0){
 		cout << "\nQuel modèle voulez vous utiliser ? (0 pour la liste): ";
 		cin.getline(temp,5,cin.widen('\n'));
@@ -612,7 +611,7 @@ void loadVoiture(){
 	cout << "\nQuel est le nom du projet ?: ";
 	cin.getline(nom,150,cin.widen('\n'));
 	//cin >> nom;
-	
+
 	currentCar = new Voiture();
 	currentCar->Load((string(nom)+".car").c_str());
 }
@@ -686,13 +685,13 @@ void listContrat(){
 	while (!it.end()) {
 		(&it).AfficheLigne();
 		it++;
-	}	
+	}
 }
 
 float listContrat(int pNum){
 	Iterateur<Contrat> it(listeContrat);
 	float montant=0;
-	
+
 	cout << "Nr Cont" << "\t" << "Nr Vend" << "\t" << "Nr Clo" << "\t" << "Date     " << "\t" << "Nom du projet concerné" << "\t" << "Ristourne" << endl;
 	while (!it.end()) {
 		if((&it).getIdVendeur()==pNum){
@@ -862,7 +861,7 @@ void afficheContrat(){
 	cin.getline(temp,5,cin.widen('\n'));
 	numCont = atoi(temp);
 	//cin >> numCont;
-	
+
 	Iterateur<Contrat> it(listeContrat);
 	while(!it.end() && (&it).getId()!=numCont){
 		it++;
@@ -935,7 +934,7 @@ void modifyContrat(){
 	cin.getline(tempT,10,cin.widen('\n'));
 	numCont = atoi(tempT);
 	//cin >> numCont;
-	
+
 	Iterateur<Contrat> it(listeContrat);
 	while(!it.end() && (&it).getId()!=numCont){
 		it++;

@@ -119,7 +119,7 @@ ostream& operator<<(ostream& flux, const Date& pDate) {
 }
 
 istream& operator>> (istream& flux, Date& pDate){
-    
+
     int size;
     int temp;
 

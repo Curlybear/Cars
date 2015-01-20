@@ -143,7 +143,7 @@ ostream& operator<<(ostream& flux, const Contrat& pContrat) {
 }
 
 istream& operator>> (istream& flux, Contrat& pContrat){
-    
+
     int size;
     int temp;
     char buff[50];
