@@ -264,7 +264,6 @@ int main() {
             choix = affichageMenu(userConnected, lastMenu);
         }
         cout << endl << endl;
-        cout << choix << endl;
     }
     if (!listeUsers.vide()) {
         fichierUser.saveAll(listeUsers);

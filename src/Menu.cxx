@@ -36,12 +36,13 @@ int Menu::choisir (void){
     {
         cout << "Votre choix : ";
         cin.getline(temp,3,cin.widen('\n'));
-        if (strcmp(temp,"\n"))
+        if (strlen(temp)==0)
         {
             r=-1;
         }else{
             r = atoi(temp);
         }
+        //cin >> r;
     }while (r>=nChoixMenu || r<0);
     choix = r;
     return (r);
