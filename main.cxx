@@ -619,16 +619,30 @@ void loadVoiture(){
 void delClient() {
     int numero;
     char temp[5];
+    Iterateur<Contrat> it(listeContrat);
+    bool found=false;
 
     cout << "Numero du client a supprimer: ";
     cin.getline(temp,5,cin.widen('\n'));
     numero = atoi(temp);
     //cin >> numero;
 
-    try{
-        listeClients.delElem(Client(" "," ",numero," "));
-    }catch(const InvalidRequestException& exc){
-        cout << exc << endl;
+    while (!it.end() && !found) {
+        if(numero==(&it).getIdClient()){
+            found = true;
+        }
+        it++;
+    }
+
+    if(!found){
+        try{
+            listeClients.delElem(Client(" "," ",numero," "));
+        }catch(const InvalidRequestException& exc){
+            cout << exc << endl;
+        }
+    }
+    else{
+        cout << "Le client est concerné par un contrat et ne peut donc pas être supprimer" << endl;
     }
 }
 

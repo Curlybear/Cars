@@ -217,6 +217,7 @@ void Voiture::Load(const char* pFichNom){
     for(int i=temp; i<10;i++){
         if(options[i]){
             delete options[i];
+            options[i]=NULL;
         }
     }
 
