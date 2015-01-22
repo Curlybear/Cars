@@ -20,7 +20,7 @@ Menu::Menu (char *opt[], int no){
         strcpy(options[i],opt[i]);
     }
     nChoixMenu = no;
-    choix = 'Q';
+    choix = -1;
 }
 void Menu::affiche(void){
     for (int i = 0; i < nChoixMenu; i++){
@@ -32,12 +32,16 @@ int Menu::choisir (void){
     int r;
     char temp[3];
 
-    cout << "Votre choix : ";
     do
     {
+        cout << "Votre choix : ";
         cin.getline(temp,3,cin.widen('\n'));
-        r = atoi(temp);
-        //cin >> r;
+        if (strcmp(temp,"\n"))
+        {
+            r=-1;
+        }else{
+            r = atoi(temp);
+        }
     }while (r>=nChoixMenu || r<0);
     choix = r;
     return (r);

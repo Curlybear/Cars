@@ -18,6 +18,8 @@
 #include "src/InvalidFonctionException.h"
 #include "src/InvalidPasswordException.h"
 #include "src/InvalidRequestException.h"
+#include "src/ExistingOptionException.h"
+#include "src/IOException.h"
 #include "src/Option.h"
 #include "src/Voiture.h"
 #include "src/Modele.h"
@@ -92,8 +94,14 @@ int main() {
     fichierUser.loadAll(listeUsers);
     fichierClient.loadAll(listeClients);
     fichierContrat.loadAll(listeContrat);
-    loadModeles();
-    loadOptions();
+
+    try{
+        loadModeles();
+        loadOptions();
+    } catch (const IOException& exc){
+        cout << exc << endl;
+        return 0;
+    }
 
     loadIndex();
 
@@ -256,6 +264,7 @@ int main() {
             choix = affichageMenu(userConnected, lastMenu);
         }
         cout << endl << endl;
+        cout << choix << endl;
     }
     if (!listeUsers.vide()) {
         fichierUser.saveAll(listeUsers);
@@ -499,7 +508,6 @@ void clrscreen() {
 void Pause() {
     cout << "Press ENTER to continue...";
     cin.get();
-    cin.ignore();
 }
 
 void newUser() {
@@ -557,12 +565,9 @@ void newVoiture() {
         //cin >> choix;
         if(toupper(choix[0]) == 'Y'){
             currentCar->Save();
-            delete currentCar;
-            currentCar=NULL;
         }
-        else{
-            return;
-        }
+        delete currentCar;
+        currentCar=NULL;
     }
 
     cout << "\nComment souhaitez-vous nommer ce nouveau projet ?: ";
@@ -600,12 +605,9 @@ void loadVoiture(){
         //cin >> choix;
         if(toupper(choix[0]) == 'Y'){
             currentCar->Save();
-            delete currentCar;
-            currentCar=NULL;
         }
-        else{
-            return;
-        }
+        delete currentCar;
+        currentCar=NULL;
     }
 
     cout << "\nQuel est le nom du projet ?: ";
@@ -748,7 +750,7 @@ void loadOptions() {
         }
     }
     else{
-        // TODO throw some I/O exception i guess
+        throw IOException("Impossible de charger les options en mémoire.");
     }
 
     flux.close();
@@ -778,18 +780,18 @@ void loadModeles() {
         }
     }
     else{
-        // throw some I/O exception i guess
+        throw IOException("Impossible de charger les modèles en mémoire.");
     }
     flux.close();
 }
 
 void ajoutOption(){
-    char codeOpt[4]="0";
+    char codeOpt[5]="0";
     Option temp;
 
     while(strcmp(codeOpt,"0")==0){
         cout << "\nQuelle option voulez vous ajouter ? (0 pour la liste): ";
-        cin.getline(codeOpt,4,cin.widen('\n'));
+        cin.getline(codeOpt,5,cin.widen('\n'));
         //cin >> codeOpt;
         if(strcmp(codeOpt,"0")==0){
             afficherOptions();
@@ -802,16 +804,25 @@ void ajoutOption(){
         it++;
     }
 
-    *currentCar = (*currentCar)+(&it);
+    if (!it.end() && (&it)==temp)
+    {
+        try{
+            *currentCar = (*currentCar)+(&it);
+        } catch (const ExistingOptionException& exc){
+            cout << exc << endl;
+        }
+    } else {
+        cout << "L'option demandée n'existe pas" << endl;
+    }
 }
 
 void retraitOption(){
-    char codeOpt[4]="0";
+    char codeOpt[5]="0";
     Option temp;
 
     while(strcmp(codeOpt,"0")==0){
         cout << "\nQuelle option voulez vous retirer ? (0 pour la liste): ";
-        cin.getline(codeOpt,4,cin.widen('\n'));
+        cin.getline(codeOpt,5,cin.widen('\n'));
         //cin >> codeOpt;
         if(strcmp(codeOpt,"0")==0){
             afficherOptions();
@@ -821,20 +832,30 @@ void retraitOption(){
     temp.setCode(codeOpt);
     Iterateur<Option> it(listeOptions);
     int i=0;
+
     while(!it.end() && !((&it)==temp)){
         it++;
     }
 
-    *currentCar = (*currentCar)-(&it);
+    if (!it.end() && (&it)==temp)
+    {
+        try{
+            *currentCar = (*currentCar)-(&it);
+        } catch (const ExistingOptionException& exc){
+            cout << exc << endl;
+        }
+    } else {
+        cout << "L'option demandée n'existe pas" << endl;
+    }
 }
 
 void ristourneOption(){
-    char codeOpt[4]="0";
+    char codeOpt[5]="0";
     Option temp;
 
     while(strcmp(codeOpt,"0")==0){
         cout << "\nSur quelle option voulez vous appliquer une ristourne? (0 pour la liste): ";
-        cin.getline(codeOpt,4,cin.widen('\n'));
+        cin.getline(codeOpt,5,cin.widen('\n'));
         //cin >> codeOpt;
         if(strcmp(codeOpt,"0")==0){
             afficherOptions();

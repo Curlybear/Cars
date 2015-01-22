@@ -61,12 +61,10 @@ const void Voiture::Affiche() const{
     }
 }
 
-void Voiture::AjouteOption(const Option pOpt){
+void Voiture::AjouteOption(const Option& pOpt){
     int i;
 
-    if(checkOption(pOpt)){
-        //TODO Throw exception
-    }
+    checkOption(pOpt, true);
 
     for(i=0 ; i<10 && options[i]!=NULL;i++);
 
@@ -78,9 +76,7 @@ void Voiture::AjouteOption(const Option pOpt){
 void Voiture::RetireOption(const char * pNomOption){
     int i;
 
-    if(!checkOption(Option(pNomOption))){
-        //TODO Throw exception
-    }
+    checkOption(Option(pNomOption), false);
 
     for(i=0 ; i<10 ; i++){
         if(options[i]!=NULL){
@@ -144,13 +140,27 @@ const Option* Voiture::getOption(int i) const{
     }
 }
 
-bool Voiture::checkOption(const Option& pOpt) const{
+void Voiture::checkOption(const Option& pOpt, bool type) const{
+    // if type == 1 Throw if exist else throw if it doesn't
+    bool temp=false;
+
     for(int i=0 ; i<10 ; i++){
         if(options[i]!=NULL && *(options[i])==pOpt){
-            return true;
+            temp=true;
+            break;
         }
     }
-    return false;
+
+    if(temp==true){
+        if(temp == type){
+            throw ExistingOptionException("L'option est déjà présente sur la voiture.");
+        }
+    }
+    else{
+        if(temp == type){
+            throw ExistingOptionException("L'option est n'est pas installé sur la voiture.");
+        }
+    }
 }
 
 bool Voiture::appliquerRistourne(const Option& pOpt){

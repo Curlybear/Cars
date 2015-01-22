@@ -1,27 +1,27 @@
 /*
- * InvalidRequestException.h
+ * ExistingOptionException.h
  *
  *  Created on: Dec 9, 2014
  *      Author: curlybear
  */
 
-#ifndef INVALIDREQUESTEXCEPTION_H_
-#define INVALIDREQUESTEXCEPTION_H_
+#ifndef EXISTINGOPTIONEXCEPTION_H_
+#define EXISTINGOPTIONEXCEPTION_H_
 
 #include <iostream>
 #include <string.h>
 
 using namespace std;
 
-class InvalidRequestException {
-    friend ostream& operator<<(ostream& s,const InvalidRequestException& m);
+class ExistingOptionException {
+    friend ostream& operator<<(ostream& s,const ExistingOptionException& m);
     private:
         char * message;
     public:
-        InvalidRequestException() { message=NULL; }
-        ~InvalidRequestException(){}
-        InvalidRequestException(char * msg){message=NULL; setMessage(msg);};
-        InvalidRequestException(const InvalidRequestException& e)
+        ExistingOptionException() { message=NULL; }
+        ~ExistingOptionException(){}
+        ExistingOptionException(char * msg){message=NULL; setMessage(msg);};
+        ExistingOptionException(const ExistingOptionException& e)
         {
             message = e.message;
         }
@@ -42,4 +42,4 @@ class InvalidRequestException {
         }
 };
 
-#endif /* INVALIDREQUESTEXCEPTION_H_ */
+#endif /* EXISTINGOPTIONEXCEPTION_H_ */

@@ -10,6 +10,7 @@
 
 #include "Option.h"
 #include "Modele.h"
+#include "ExistingOptionException.h"
 #include <iostream>
 
 using namespace std;
@@ -27,6 +28,7 @@ private:
     char * nom;
     Modele modele;
     Option * options[10];
+    void checkOption(const Option&, bool type) const;
 
 public:
 
@@ -37,7 +39,7 @@ public:
 
     const void Affiche() const;
 
-    void AjouteOption(const Option pOpt);
+    void AjouteOption(const Option& pOpt);
     void RetireOption(const char * pNomOption);
 
     void setNom(const char* pNom);
@@ -48,7 +50,6 @@ public:
     const float getPrix() const;
     const Option* getOption(int i) const;
 
-    bool checkOption(const Option&) const;
     bool appliquerRistourne(const Option&);
 
     void Save() const;

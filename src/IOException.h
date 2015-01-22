@@ -1,27 +1,27 @@
 /*
- * InvalidRequestException.h
+ * IOException.h
  *
  *  Created on: Dec 9, 2014
  *      Author: curlybear
  */
 
-#ifndef INVALIDREQUESTEXCEPTION_H_
-#define INVALIDREQUESTEXCEPTION_H_
+#ifndef IOEXCEPTION_H_
+#define IOEXCEPTION_H_
 
 #include <iostream>
 #include <string.h>
 
 using namespace std;
 
-class InvalidRequestException {
-    friend ostream& operator<<(ostream& s,const InvalidRequestException& m);
+class IOException {
+    friend ostream& operator<<(ostream& s,const IOException& m);
     private:
         char * message;
     public:
-        InvalidRequestException() { message=NULL; }
-        ~InvalidRequestException(){}
-        InvalidRequestException(char * msg){message=NULL; setMessage(msg);};
-        InvalidRequestException(const InvalidRequestException& e)
+        IOException() { message=NULL; }
+        ~IOException(){}
+        IOException(char * msg){message=NULL; setMessage(msg);};
+        IOException(const IOException& e)
         {
             message = e.message;
         }
@@ -42,4 +42,4 @@ class InvalidRequestException {
         }
 };
 
-#endif /* INVALIDREQUESTEXCEPTION_H_ */
+#endif /* IOEXCEPTION_H_ */
